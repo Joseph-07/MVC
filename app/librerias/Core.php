@@ -44,12 +44,14 @@
 
 			//Para probar traer método
 			//echo " ".$this->metodoActual;
+			if (isset($url[2])) {
+				//Obtener los parámetros
+				$this->parametros = $url ? array_values($url) : [];
 
-			//Obtener los parámetros
-			$this->parametros = $url ? array_values($url) : [];
-
-			//Llamar callback con parámetros array
-			call_user_func_array([$this->controladorActual, $this->metodoActual], $this->parametros);
+				//Llamar callback con parámetros array
+				call_user_func_array([$this->controladorActual, $this->metodoActual], $this->parametros);
+			}
+			
 		}
 
 		public function getUrl(){

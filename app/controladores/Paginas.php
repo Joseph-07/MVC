@@ -5,6 +5,10 @@
 			//echo "Controlador pagina cargada";
 		}
 
+		public function index (){
+			
+		}
+
 		public function articulo(){
 
 		}
