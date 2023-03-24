@@ -32,11 +32,24 @@
 
 
 			//chequear la segunda parte de la url que sería el método
-			if(method_exists($this->controladorActual, $url[1])){
-				//Chequeamos el método
-				$this->metodoActual = $url[1];
+			if(isset($url[1])){
+				if(method_exists($this->controladorActual, $url[1])){
+					//Chequeamos el método
+					$this->metodoActual = $url[1];
+
+					//unset indice
+					unset($url[1]);
+				}
 			}
 
+			//Para probar traer método
+			//echo " ".$this->metodoActual;
+
+			//Obtener los parámetros
+			$this->parametros = $url ? array_values($url) : [];
+
+			//Llamar callback con parámetros array
+			call_user_func_array([$this->controladorActual, $this->metodoActual], $this->parametros);
 		}
 
 		public function getUrl(){
