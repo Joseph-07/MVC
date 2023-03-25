@@ -13,18 +13,21 @@
 
 		// Constructor
 		public function __construct(){
-			//print_r($this->getUrl());
+
 			$url = $this->getUrl();
-			//var_dump($url);
+			
 			//buscar en controladores si el controlador existe
-			if (file_exists('../app/controladores/'.ucwords($url[0]).'.php')) {
+			if(isset($url)){
+				if(file_exists('../app/controladores/'.ucwords($url[0]).'.php')) {
 				//si existe se configura como controlador por defecto
 				$this->controladorActual = ucwords($url[0]);
 
 
 				//unset indice
 				unset($url[0]);
+				}
 			}
+			
 
 			// requerir el controlador
 			require_once '../app/controladores/'.$this->controladorActual.'.php';
@@ -43,14 +46,15 @@
 			}
 
 			//Para probar traer método
-			//echo " ".$this->metodoActual;
-			if (isset($url[2])) {
-				//Obtener los parámetros
-				$this->parametros = $url ? array_values($url) : [];
+			// echo " ".$this->metodoActual;
+			
+			//Obtener los parámetros
+			$this->parametros = $url ? array_values($url) : [];
+			// var_dump($this->parametros);
 
-				//Llamar callback con parámetros array
-				call_user_func_array([$this->controladorActual, $this->metodoActual], $this->parametros);
-			}
+			//Llamar callback con parámetros array
+			call_user_func_array([$this->controladorActual, $this->metodoActual], $this->parametros);
+			
 			
 		}
 
@@ -62,9 +66,6 @@
 				$url = filter_var($url, FILTER_SANITIZE_URL);
 				$url = explode('/', $url);
 				return $url;
-			}
-			else{
-				return ' ';
 			}
 		}
 	}
